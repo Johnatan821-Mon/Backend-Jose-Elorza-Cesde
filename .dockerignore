@@ -1,0 +1,10 @@
+target/
+.git/
+.gitignore
+.env
+*.env
+credentials.json
+token.json
+*.md
+.idea/
+.vscode/

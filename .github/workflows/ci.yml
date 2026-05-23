@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'          # Cachea ~/.m2 entre ejecuciones para acelerar el build
+
+      - name: Compilar y ejecutar tests
+        run: ./mvnw verify --no-transfer-progress
+        env:
+          # Perfil dev: usa H2 en memoria, no necesita DB externa
+          SPRING_PROFILES_ACTIVE: dev
+          # JWT_SECRET en GitHub: Settings -> Secrets -> Actions -> New repository secret
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+      - name: Publicar resultados de tests
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: target/surefire-reports/
+          retention-days: 7
