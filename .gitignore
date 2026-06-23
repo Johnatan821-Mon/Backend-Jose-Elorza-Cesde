@@ -34,9 +34,12 @@ build/
 
 ### Entorno y secretos — NUNCA subir a git ###
 .env
-*.env
+.env.prod
 credentials.json
 token.json
 
 ### Docker ###
 docker-compose.override.yml
+
+### VPS runtime — certificados SSL y datos generados en servidor ###
+data/

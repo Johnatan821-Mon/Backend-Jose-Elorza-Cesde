@@ -4,7 +4,7 @@ import com.jorgelorza.clientes.admin.dto.DashboardResponse;
 import com.jorgelorza.clientes.admin.dto.ReporteIngresoResponse;
 import com.jorgelorza.clientes.agendamiento.model.EstadoCita;
 import com.jorgelorza.clientes.agendamiento.repository.CitaRepository;
-import com.jorgelorza.clientes.auth.repository.UserRepository;
+import com.jorgelorza.clientes.usuario.repository.UserRepository;
 import com.jorgelorza.clientes.pago.model.EstadoPago;
 import com.jorgelorza.clientes.pago.repository.PagoRepository;
 import com.jorgelorza.clientes.servicio.repository.ServicioRepository;

@@ -1,7 +1,7 @@
 package com.jorgelorza.clientes.usuario.service;
 
-import com.jorgelorza.clientes.auth.model.User;
-import com.jorgelorza.clientes.auth.repository.UserRepository;
+import com.jorgelorza.clientes.usuario.model.User;
+import com.jorgelorza.clientes.usuario.repository.UserRepository;
 import com.jorgelorza.clientes.common.exception.ResourceNotFoundException;
 import com.jorgelorza.clientes.usuario.dto.ActualizarPerfilRequest;
 import com.jorgelorza.clientes.usuario.dto.UsuarioResponse;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Lógica de negocio para la gestión de usuarios.
  *
- * Reutiliza {@link UserRepository} del módulo auth en lugar de definir
+ * Reutiliza {@link UserRepository} del módulo usuario en lugar de definir
  * una entidad propia: el usuario ya existe, este módulo solo expone
  * operaciones de lectura y edición de perfil sobre él.
  *

@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthResponse {
 
-    private String token; // JWT firmado con HMAC-SHA256, válido según jwt.expiration
+    private String token;         // JWT de acceso, corto plazo (jwt.expiration)
+    private String refreshToken;  // Token de refresco, largo plazo (jwt.refresh-expiration)
     private String email;
     private String name;
     private String role;

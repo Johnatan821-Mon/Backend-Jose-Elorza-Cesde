@@ -2,6 +2,7 @@ package com.jorgelorza.clientes.auth.controller;
 
 import com.jorgelorza.clientes.auth.dto.AuthResponse;
 import com.jorgelorza.clientes.auth.dto.LoginRequest;
+import com.jorgelorza.clientes.auth.dto.RefreshRequest;
 import com.jorgelorza.clientes.auth.dto.RegisterRequest;
 import com.jorgelorza.clientes.auth.service.AuthService;
 import jakarta.validation.Valid;
@@ -23,8 +24,7 @@ public class AuthController {
 
     /**
      * POST /api/auth/register
-     * Crea una cuenta nueva y devuelve un JWT listo para usar.
-     * Retorna 201 Created para indicar que se creó un recurso nuevo.
+     * Crea una cuenta nueva y devuelve access token + refresh token.
      */
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
@@ -33,11 +33,31 @@ public class AuthController {
 
     /**
      * POST /api/auth/login
-     * Valida credenciales y devuelve un JWT si son correctas.
-     * Retorna 200 OK porque no crea ningún recurso, solo autentica.
+     * Valida credenciales y devuelve access token + refresh token.
      */
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    /**
+     * POST /api/auth/refresh
+     * Emite un nuevo access token a partir de un refresh token válido.
+     * El refresh token usado se invalida y se devuelve uno nuevo (rotación).
+     */
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthResponse> refresh(@Valid @RequestBody RefreshRequest request) {
+        return ResponseEntity.ok(authService.refresh(request.getRefreshToken()));
+    }
+
+    /**
+     * POST /api/auth/logout
+     * Invalida el refresh token en BD. El access token expirará por su propio TTL.
+     * Devuelve 204 No Content — el cliente debe descartar ambos tokens localmente.
+     */
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@Valid @RequestBody RefreshRequest request) {
+        authService.logout(request.getRefreshToken());
+        return ResponseEntity.noContent().build();
     }
 }

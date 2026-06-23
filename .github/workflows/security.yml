@@ -1,0 +1,74 @@
+name: Security
+
+on:
+  # Revisa dependencias nuevas en cada PR hacia main
+  pull_request:
+    branches: [main]
+  # Escaneo completo de vulnerabilidades todos los lunes a las 8am UTC
+  schedule:
+    - cron: '0 8 * * 1'
+
+jobs:
+
+  # ── Revisión de dependencias en PRs (gratuito, nativo de GitHub) ──────────
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Revisar dependencias vulnerables
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+          comment-summary-in-pr: always
+
+  # ── Escaneo OWASP semanal completo ───────────────────────────────────────
+  owasp-scan:
+    name: OWASP Dependency Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    permissions:
+      contents: read
+      security-events: write   # para publicar resultados en Security tab
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Ejecutar OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'clientes-api'
+          path: '.'
+          format: 'SARIF'
+          args: >
+            --enableRetired
+            --failOnCVSS 7
+
+      - name: Publicar resultados SARIF en GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: reports/dependency-check-report.sarif
+
+      - name: Guardar reporte como artefacto
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: owasp-report
+          path: reports/
+          retention-days: 30

@@ -1,4 +1,4 @@
-package com.jorgelorza.clientes.auth.model;
+package com.jorgelorza.clientes.usuario.model;
 
 import jakarta.persistence.*;
 import lombok.*;

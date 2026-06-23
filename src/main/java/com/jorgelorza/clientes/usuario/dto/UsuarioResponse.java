@@ -8,7 +8,7 @@ import lombok.Data;
  *
  * No incluye la contraseña ni ningún dato interno de Spring Security.
  * {@code role} se serializa como String (p.ej. "ROLE_ADMIN") para que el cliente
- * no dependa del enum {@link com.jorgelorza.clientes.auth.model.Role}.
+ * no dependa del enum {@link com.jorgelorza.clientes.usuario.model.Role}.
  */
 @Data
 @Builder

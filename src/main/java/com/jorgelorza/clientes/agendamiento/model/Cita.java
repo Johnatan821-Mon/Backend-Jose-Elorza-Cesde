@@ -1,6 +1,6 @@
 package com.jorgelorza.clientes.agendamiento.model;
 
-import com.jorgelorza.clientes.auth.model.User;
+import com.jorgelorza.clientes.usuario.model.User;
 import com.jorgelorza.clientes.servicio.model.Servicio;
 import jakarta.persistence.*;
 import lombok.*;

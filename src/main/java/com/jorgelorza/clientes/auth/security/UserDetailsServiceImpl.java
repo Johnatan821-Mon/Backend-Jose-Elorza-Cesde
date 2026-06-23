@@ -1,6 +1,6 @@
 package com.jorgelorza.clientes.auth.security;
 
-import com.jorgelorza.clientes.auth.repository.UserRepository;
+import com.jorgelorza.clientes.usuario.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
- * Puente entre Spring Security y la entidad {@link com.jorgelorza.clientes.auth.model.User}.
+ * Puente entre Spring Security y la entidad {@link com.jorgelorza.clientes.usuario.model.User}.
  *
  * Spring Security llama a {@code loadUserByUsername} durante la autenticación
  * (login y validación de JWT) para obtener el usuario y comparar credenciales.

@@ -5,15 +5,15 @@ services:
     image: postgres:16-alpine
     container_name: clientes-db
     environment:
-      POSTGRES_DB: clientesdb
-      POSTGRES_USER: clientes_user
-      POSTGRES_PASSWORD: clientes_pass
+      POSTGRES_DB: ${DB_NAME:-clientesdb}
+      POSTGRES_USER: ${DB_USERNAME:-clientes_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-clientes_pass}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U clientes_user -d clientesdb"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-clientes_user} -d ${DB_NAME:-clientesdb}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -23,8 +23,8 @@ services:
     image: dpage/pgadmin4:latest
     container_name: clientes-pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
     ports:
       - "5050:80"
     depends_on:

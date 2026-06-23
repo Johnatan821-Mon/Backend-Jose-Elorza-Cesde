@@ -1,6 +1,6 @@
-package com.jorgelorza.clientes.auth.repository;
+package com.jorgelorza.clientes.usuario.repository;
 
-import com.jorgelorza.clientes.auth.model.User;
+import com.jorgelorza.clientes.usuario.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
