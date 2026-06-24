@@ -3,7 +3,7 @@ name: Security
 on:
   # Revisa dependencias nuevas en cada PR hacia main
   pull_request:
-    branches: [main]
+    branches: [master]
   # Escaneo completo de vulnerabilidades todos los lunes a las 8am UTC
   schedule:
     - cron: '0 8 * * 1'
